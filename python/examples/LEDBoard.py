@@ -1,6 +1,8 @@
 # Jrdiver's WS2812 ZigZag Board Program
 # Original Library's: Tony DiCola (tony@tonydicola.com)
 # Author: Jridver
+# My setup is using the 1.0 revision of this board: https://easyeda.com/sharkbytecomputer/ws2812b-try-2
+# Rev 1.1 that is the current version there corrects a few of the issues I ran into.
 
 import time
 
@@ -27,28 +29,28 @@ LED_PanelWidth = 8                     #Number of LEDS Left to Right
 LED_PanelHeight= 8                     #Number of LEDS Top to Bottom
 LED_PanelCount = 3                     #Number of Panels
 LED_Direction  = 1                     #1 for Horizontal, 2 for Vertical.  Top Left is assumed to be LED1
-LED_COUNT      = LED_PanelWidth * LED_PanelHeight * LED_PanelCount     # Number of LED pixels.
+LED_COUNT      = LED_PanelWidth * LED_PanelHeight * LED_PanelCount     # Number of LED pixels.  Default is to generate this from the values above.
 LED_PIN        = 18                    # GPIO pin connected to the pixels (18 uses PWM!).
 LED_FREQ_HZ    = 800000                # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5                     # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 050                   # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 255                   # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False                 # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0                     # set to '1' for GPIOs 13, 19, 41, 45 or 53
-#LED_STRIP      = ws.WS2811_STRIP_RBG   # Strip type and color ordering - PTH are RBG
-LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and color ordering - SMT are GRB
+#LED_STRIP      = ws.WS2811_STRIP_RBG   # Strip type and color ordering - My PTH LED's are RBG
+LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and color ordering - My SMT/SMD LED's are GRB
 
 #General Functions for convenience
 #--------------------------------------------------------------------------------------------------------------------
-#Set all pixel's to specific color
+#Set all pixel's to specific color but does not display it directly.  Useful for Background Colors
 def SetDisplayColor(strip, color):
-    for i in range(strip.numPixels()): 
-        strip.setPixelColor(i, color)
+    for PixelNum in range(strip.numPixels()): 
+        strip.setPixelColor(PixelNum, color)
 
-#Turn all the pixel's off but don't directly display
+#Turn all the pixel's off but don't directly display.  Useful for clearing previous frame/design before displaying new one.
 def Blank(strip):
     SetDisplayColor(strip, Color(0, 0, 0))
 
-#Turn off all the Pixes and display it
+#Turn off all the Pixes and display it.
 def BlankDisplay(strip, wait_ms):
     Blank(strip)
     strip.show()
@@ -56,7 +58,8 @@ def BlankDisplay(strip, wait_ms):
 	
 #Set up a coordinate system to make programing easier
 #Panel size should be known.  Assuming we use a zig-zag pattern with Known direction
-
+#Coordinates are based off upper left being (1,1)
+#--------------------------------------------------------------------------------------------------------------------
 def SetCordinate(strip, X, Y, color):
     if (LED_Direction == 1):    #Horizontal Pixels.  Odd Y values should be correct order, even values should be inverted order.
         PixelNum = LED_PanelWidth * (Y - 1)
@@ -71,9 +74,9 @@ def SetCordinate(strip, X, Y, color):
             PixelNum += X
         PixelNum -= 1 #Subtract 1 because the LEDS use 0 as Starting point and not 1
     
-    else:   #Vertical Pixels.  almost able to just invert x and y values.
+    else:   #Vertical Pixels.  Almost was able to just invert x and y values.
         PixelNum = LED_PanelHeight * (X - 1)
-        if (Y > LED_PanelHeight):
+        while (Y > LED_PanelHeight):
             PixelNum += (LED_PanelHeight * LED_PanelWidth)
             Y -= LED_PanelHeight
         if (Y<=0):
@@ -294,11 +297,15 @@ def Random(strip):
     wait_ms=1000
     for loop in range(0,10):
         for position in range(0,LED_COUNT):
-            A = random.randint(0,255)
-            B = random.randint(0,255)
-            C = random.randint(0,255)
-
-            strip.setPixelColor(position, Color(A, B, C))
+            if (random.randint(0,4)>2):
+                R = random.randint(0,255)
+                G = random.randint(0,255)
+                B = random.randint(0,255)
+            else:
+                R=0
+                G=0
+                B=0
+            strip.setPixelColor(position, Color(R, G, B))
         strip.show()
         time.sleep(wait_ms/1000.0)
 
@@ -316,13 +323,13 @@ if __name__ == '__main__':
     print ('Press Ctrl-C to quit.')
     try:
         while True:
-            #Rainbow(strip)
-            #BlankDisplay(strip, 1000)
-            #DFScrollLeft(strip, 0, 250)
-            M(strip, 0, 0, Color(255, 255, 255))
-            strip.show()
-            #Random(strip)
-            #OpenScroll(strip, Color(66, 134, 244), 250)
+            Rainbow(strip)
+            BlankDisplay(strip, 1000)
+            DFScrollLeft(strip, 0, 250)
+            #M(strip, 0, 0, Color(255, 255, 255))
+            #strip.show()
+            Random(strip)
+            OpenScroll(strip, Color(66, 134, 244), 250)
         
     #Turn off the LED's on Program Exit
     except KeyboardInterrupt:

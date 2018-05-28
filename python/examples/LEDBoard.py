@@ -4,14 +4,14 @@
 # My setup is using the 1.0 revision of this board: https://easyeda.com/sharkbytecomputer/ws2812b-try-2
 # Rev 1.1 that is the current version there corrects a few of the issues I ran into.
 
-import time
-
-from neopixel import *
-
 import argparse
+import datetime
+import random
 import signal
 import sys
-import random
+import time
+from neopixel import *
+
 
 def signal_handler(signal, frame):
     colorWipe(strip, Color(0,0,0))
@@ -32,7 +32,7 @@ LED_NumPnlHigh = 1                     #Number of Panels High the Array is
 LED_Direction  = 1                     #1 for Horizontal, 2 for Vertical.  Top Left is assumed to be LED1
 LED_PIN        = 18                    # GPIO pin connected to the pixels (18 uses PWM!).
 LED_FREQ_HZ    = 800000                # LED signal frequency in hertz (usually 800khz)
-LED_DMA        = 10                     # DMA channel to use for generating signal (try 5)
+LED_DMA        = 10                    # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 075                   # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False                 # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0                     # set to '1' for GPIOs 13, 19, 41, 45 or 53
@@ -363,6 +363,9 @@ def num0(strip, xOffset, yOffset, color):
     SetCordinate(strip, 3+xOffset, 5+yOffset, color)
     SetCordinate(strip, 4+xOffset, 4+yOffset, color)
 
+def colon(strip, xOffset, yOffset, color):  #2 Pixel Wide Character
+    SetRange (strip, 1+xOffset, 3+yOffset, 2+xOffset, 4+yOffset, color)
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
 
 #LED Patterns
 #--------------------------------------------------------------------------------------------------------------------
@@ -375,8 +378,7 @@ def AlfaFlag(strip, xOffset, yOffset):
     SetRange(strip, 6+xOffset, 6+yOffset, 8+xOffset, 6+yOffset, Color(0, 0, 255))
     SetRange(strip, 6+xOffset, 7+yOffset, 9+xOffset, 7+yOffset, Color(0, 0, 255))
     SetRange(strip, 6+xOffset, 8+yOffset, 10+xOffset, 8+yOffset, Color(0, 0, 255))
-
-
+    
 def DiveFlag(strip, xOffset, yOffset):
     SetRange(strip, 1+xOffset, 1+yOffset, 10+xOffset, 8+yOffset, Color(255, 0, 0))
     SetCordinate(strip, 1+xOffset, 1+yOffset, Color(255, 255, 255))
@@ -414,9 +416,7 @@ def MCCreeper (strip, xOffset, yOffset):
     SetRange(strip, 4+xOffset, 5+yOffset, 5+xOffset, 7+yOffset, Color(0, 0, 0))
     SetRange(strip, 3+xOffset, 6+yOffset, 3+xOffset, 8+yOffset, Color(0, 0, 0))
     SetRange(strip, 6+xOffset, 6+yOffset, 6+xOffset, 8+yOffset, Color(0, 0, 0))
-
-
-
+    
 def Open(strip, color, wait_ms):
     Blank(strip)
     O(strip, 0, 0, color)
@@ -447,7 +447,6 @@ def BlargScroll(strip, color, wait_ms):
         strip.show()
         time.sleep(wait_ms/1000.0)
 
-
 def Rainbow(strip):
     wait_ms=2
     for i in range(0,255):
@@ -463,6 +462,272 @@ def Rainbow(strip):
         strip.show()
         time.sleep(wait_ms/1000.0)
 
+def Clock(strip, color, wait_ms = 1500, hrformat = 24, xOffset = 0, yOffset = 0):  #Reads time off of pi and displays it...needs at least 30 or so pixels wide to display properly in 24 hour format, 37 for 12 hour.
+    Blank(strip)    #Clear existing data on display
+    now = datetime.datetime.now()
+    hr=now.hour     #Set Hour to a variable
+    min = now.minute#Set Minute to a variable
+    
+    #If Hour in is 12 hour format, adjust hour and add a A or P to the end.
+    if hrformat==12:
+        if hr>12:
+            hr -=12
+            P(strip, 31+xOffset, 0+yOffset, color)
+    
+    #hour selector
+    if hr == 1:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num1(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 2:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num2(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 3:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num3(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 4:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num4(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 5:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num5(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 6:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num6(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 7:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num7(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 8:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num8(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 9:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num9(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 10:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num0(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 11:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num1(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 12:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num2(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 13:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num3(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 14:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num4(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 15:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num5(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 16:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num6(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 17:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num7(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 18:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num8(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 19:
+        num1(strip, 2+xOffset, 0+yOffset, color)
+        num9(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 20:
+        num2(strip, 0+xOffset, 0+yOffset, color)
+        num0(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 21:
+        num2(strip, 0+xOffset, 0+yOffset, color)
+        num1(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 22:
+        num2(strip, 0+xOffset, 0+yOffset, color)
+        num2(strip, 7+xOffset, 0+yOffset, color)
+    elif hr == 23:
+        num2(strip, 0+xOffset, 0+yOffset, color)
+        num3(strip, 7+xOffset, 0+yOffset, color)
+    else:
+        num0(strip, 0+xOffset, 0+yOffset, color)
+        num0(strip, 7+xOffset, 0+yOffset, color)
+
+    #Minutes
+    if min == 0:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num0(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 1:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num1(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 2:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num2(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 3:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num3(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 4:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num4(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 5:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num5(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 6:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num6(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 7:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num7(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 8:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num8(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 9:
+        num0(strip, 17+xOffset, 0+yOffset, color)
+        num9(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 10:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num0(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 11:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num1(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 12:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num2(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 13:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num3(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 14:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num4(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 15:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num5(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 16:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num6(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 17:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num7(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 18:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num8(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 19:
+        num1(strip, 17+xOffset, 0+yOffset, color)
+        num9(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 20:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num0(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 21:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num1(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 22:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num2(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 23:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num3(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 24:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num4(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 25:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num5(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 26:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num6(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 27:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num7(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 28:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num8(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 29:
+        num2(strip, 17+xOffset, 0+yOffset, color)
+        num9(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 30:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num0(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 31:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num1(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 32:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num2(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 33:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num3(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 34:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num4(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 35:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num5(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 36:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num6(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 39:
+        num3(strip, 17+xOffset, 0+yOffset, color)
+        num9(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 40:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num0(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 41:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num1(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 42:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num2(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 43:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num3(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 44:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num4(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 45:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num5(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 46:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num6(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 47:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num7(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 48:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num8(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 49:
+        num4(strip, 17+xOffset, 0+yOffset, color)
+        num9(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 50:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num0(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 51:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num1(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 52:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num2(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 53:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num3(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 54:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num4(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 55:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num5(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 56:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num6(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 57:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num7(strip, 24+xOffset, 0+yOffset, color)
+    elif min == 58:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num8(strip, 24+xOffset, 0+yOffset, color)
+    else:
+        num5(strip, 17+xOffset, 0+yOffset, color)
+        num9(strip, 24+xOffset, 0+yOffset, color)
+
+    colon(strip, 14+xOffset, 0+yOffset, color)
+    strip.show()
+    time.sleep(wait_ms/1000.0)
+        
 def Random(strip):
     wait_ms=1000
     for loop in range(0,10):
@@ -486,9 +751,10 @@ def Demo(strip):
     BlargScroll(strip, Color(66, 134, 244), 250)
     
 def TestDisplay(strip):
-    num0(strip, 0, 0, Color(66, 134, 244))
+    Blank(strip)
+    colon(strip, 0, 0, Color(66, 134, 244))
     strip.show()
-    time.sleep(1) #just to slow the infinite loop down and prevent some unneeded CPU load
+    time.sleep(1) #Just to slow the infinite loop down and prevent some unneeded CPU load and give you second to look at it if its not the only thing you have active.
         
 # Main program logic follows:
 if __name__ == '__main__':
@@ -503,6 +769,7 @@ if __name__ == '__main__':
     print ('Press Ctrl-C to quit.')
     try:
         while True:
+            Clock(strip, Color(255, 0, 0), 1500)
             #TestDisplay(strip)
             Demo(strip)
             #OpenScroll(strip, Color(66, 134, 244), 250)

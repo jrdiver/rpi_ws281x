@@ -14,30 +14,36 @@ import sys
 import random
 
 def signal_handler(signal, frame):
-        colorWipe(strip, Color(0,0,0))
-        sys.exit(0)
+    colorWipe(strip, Color(0,0,0))
+    sys.exit(0)
 
 def opt_parse():
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-c', action='store_true', help='clear the display on exit')
-        args = parser.parse_args()
-        if args.c:
-                signal.signal(signal.SIGINT, signal_handler)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', action='store_true', help='clear the display on exit')
+    args = parser.parse_args()
+    if args.c:
+        signal.signal(signal.SIGINT, signal_handler)
 
 # LED strip configuration:
 LED_PanelWidth = 8                     #Number of LEDS Left to Right
 LED_PanelHeight= 8                     #Number of LEDS Top to Bottom
-LED_PanelCount = 3                     #Number of Panels
+LED_NumPnlWide = 3                     #Number of Panels Wide the Array is
+LED_NumPnlHigh = 1                     #Number of Panels High the Array is
 LED_Direction  = 1                     #1 for Horizontal, 2 for Vertical.  Top Left is assumed to be LED1
-LED_COUNT      = LED_PanelWidth * LED_PanelHeight * LED_PanelCount     # Number of LED pixels.  Default is to generate this from the values above.
 LED_PIN        = 18                    # GPIO pin connected to the pixels (18 uses PWM!).
 LED_FREQ_HZ    = 800000                # LED signal frequency in hertz (usually 800khz)
-LED_DMA        = 5                     # DMA channel to use for generating signal (try 5)
+LED_DMA        = 10                     # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 075                   # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False                 # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0                     # set to '1' for GPIOs 13, 19, 41, 45 or 53
 #LED_STRIP      = ws.WS2811_STRIP_RBG   # Strip type and color ordering - My PTH LED's are RBG
 LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and color ordering - My SMT/SMD LED's are GRB
+
+
+#These can be hardcore but if you use the coordinate system or almost any of the provided patterns, you should set up with the variables above so we know the size of the array.
+LED_PanelCount = LED_NumPnlWide * LED_NumPnlHigh    #Number of Panels
+LED_COUNT      = LED_PanelWidth * LED_PanelHeight * LED_PanelCount     # Number of LED pixels.  Default is to generate this from the values above.
+
 
 #General Functions for convenience
 #--------------------------------------------------------------------------------------------------------------------
@@ -105,7 +111,7 @@ def SetRange (strip, sX, sY, eX, eY, color):
         for Y in range (sY, eY+1):
             SetCordinate(strip, X, Y, color)
    
-#Letters - Most are 6 Pixels wide.  There are a few Exceptions.
+#Letters - Most are 6 Pixels wide and all are 8 Pixels High.  There are a few Exceptions.
 #--------------------------------------------------------------------------------------------------------------------
 def A(strip, xOffset, yOffset, color):
     SetRange (strip, 3+xOffset, 1+yOffset, 4+xOffset, 1+yOffset, color)
@@ -282,7 +288,82 @@ def Z(strip, xOffset, yOffset, color):
     SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 4+yOffset, color)
     SetRange (strip, 5+xOffset, 3+yOffset, 6+xOffset, 3+yOffset, color)
 
+def num1(strip, xOffset, yOffset, color):  #4 Pixel Wide Character
+    SetRange (strip, 1+xOffset, 2+yOffset, 1+xOffset, 3+yOffset, color)
+    SetRange (strip, 1+xOffset, 7+yOffset, 4+xOffset, 8+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 3+xOffset, 8+yOffset, color)
     
+def num2(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 3+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 6+yOffset, 3+xOffset, 6+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 4+yOffset, color)
+    SetRange (strip, 3+xOffset, 5+yOffset, 4+xOffset, 5+yOffset, color)
+    SetRange (strip, 1+xOffset, 7+yOffset, 6+xOffset, 8+yOffset, color)
+    
+def num3(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 3+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 5+xOffset, 5+yOffset, 6+xOffset, 7+yOffset, color)
+
+def num4(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 5+yOffset, color)
+    SetRange (strip, 1+xOffset, 4+yOffset, 6+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 1+yOffset, 6+xOffset, 8+yOffset, color)
+    
+def num5(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 4+yOffset, color)
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 1+xOffset, 1+yOffset, 6+xOffset, 2+yOffset, color)
+    SetRange (strip, 3+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 5+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    
+def num6(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 3+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 5+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    SetCordinate(strip, 6+xOffset, 2+yOffset, color)
+    
+def num7(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 6+xOffset, 2+yOffset, color)
+    SetRange (strip, 5+xOffset, 3+yOffset, 6+xOffset, 3+yOffset, color)
+    SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 4+yOffset, color)
+    SetRange (strip, 3+xOffset, 5+yOffset, 4+xOffset, 6+yOffset, color)
+    SetRange (strip, 2+xOffset, 6+yOffset, 3+xOffset, 8+yOffset, color)
+    
+def num8(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 3+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    
+def num9(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 4+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 2+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 7+yOffset, color)
+    
+
+def num0(strip, xOffset, yOffset, color):
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    SetCordinate(strip, 3+xOffset, 5+yOffset, color)
+    SetCordinate(strip, 4+xOffset, 4+yOffset, color)
+
+
 #LED Patterns
 #--------------------------------------------------------------------------------------------------------------------
 def AlfaFlag(strip, xOffset, yOffset):
@@ -386,7 +467,7 @@ def Random(strip):
     wait_ms=1000
     for loop in range(0,10):
         for position in range(0,LED_COUNT):
-            if (random.randint(0,4)>2):
+            if (random.randint(1,4)>2):
                 R = random.randint(0,255)
                 G = random.randint(0,255)
                 B = random.randint(0,255)
@@ -403,6 +484,11 @@ def Demo(strip):
     DFScrollLeft(strip, 0, 250)
     Random(strip)
     BlargScroll(strip, Color(66, 134, 244), 250)
+    
+def TestDisplay(strip):
+    num0(strip, 0, 0, Color(66, 134, 244))
+    strip.show()
+    time.sleep(1) #just to slow the infinite loop down and prevent some unneeded CPU load
         
 # Main program logic follows:
 if __name__ == '__main__':
@@ -417,8 +503,7 @@ if __name__ == '__main__':
     print ('Press Ctrl-C to quit.')
     try:
         while True:
-            #MCCreeper(strip, 0, 0)
-            #strip.show()
+            #TestDisplay(strip)
             Demo(strip)
             #OpenScroll(strip, Color(66, 134, 244), 250)
 

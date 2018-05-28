@@ -33,7 +33,7 @@ LED_COUNT      = LED_PanelWidth * LED_PanelHeight * LED_PanelCount     # Number 
 LED_PIN        = 18                    # GPIO pin connected to the pixels (18 uses PWM!).
 LED_FREQ_HZ    = 800000                # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5                     # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 255                   # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 075                   # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False                 # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0                     # set to '1' for GPIOs 13, 19, 41, 45 or 53
 #LED_STRIP      = ws.WS2811_STRIP_RBG   # Strip type and color ordering - My PTH LED's are RBG
@@ -209,29 +209,94 @@ def P(strip, xOffset, yOffset, color):
     SetRange (strip, 1+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
     SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 4+yOffset, color)
     SetRange (strip, 1+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+
+def Q(strip, xOffset, yOffset, color):
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 6+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 4+xOffset, 8+yOffset, color)
+    SetCordinate(strip, 6+xOffset, 8+yOffset, color)
+    SetCordinate(strip, 5+xOffset, 7+yOffset, color)
+    SetCordinate(strip, 4+xOffset, 6+yOffset, color)
+    
+def R(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 8+yOffset, color)
+    SetRange (strip, 1+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 4+yOffset, color)
+    SetRange (strip, 1+xOffset, 4+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 4+xOffset, 6+yOffset, 5+xOffset, 6+yOffset, color)
+    SetRange (strip, 5+xOffset, 7+yOffset, 6+xOffset, 8+yOffset, color)
+    
+def S(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 2+yOffset, 2+xOffset, 3+yOffset, color)
+    SetRange (strip, 5+xOffset, 2+yOffset, 6+xOffset, 3+yOffset, color)
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 1+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 2+xOffset, 4+yOffset, 3+xOffset, 4+yOffset, color)
+    SetRange (strip, 4+xOffset, 5+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 6+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    
+def T(strip, xOffset, yOffset, color):
+    SetRange (strip, 3+xOffset, 1+yOffset, 4+xOffset, 8+yOffset, color)
+    SetRange (strip, 1+xOffset, 1+yOffset, 6+xOffset, 2+yOffset, color)
+    
+def U(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 7+yOffset, color)
+    SetRange (strip, 5+xOffset, 1+yOffset, 6+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 5+xOffset, 8+yOffset, color)
+    
+def V(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 5+yOffset, color)
+    SetRange (strip, 5+xOffset, 1+yOffset, 6+xOffset, 5+yOffset, color)
+    SetRange (strip, 2+xOffset, 6+yOffset, 5+xOffset, 7+yOffset, color)
+    SetRange (strip, 3+xOffset, 8+yOffset, 4+xOffset, 8+yOffset, color)
+    
+def W(strip, xOffset, yOffset, color):  #8 Pixel Wide Character
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 8+yOffset, color)
+    SetRange (strip, 7+xOffset, 1+yOffset, 8+xOffset, 8+yOffset, color)
+    SetRange (strip, 3+xOffset, 5+yOffset, 3+xOffset, 7+yOffset, color)
+    SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 6+yOffset, color)
+    SetRange (strip, 6+xOffset, 5+yOffset, 6+xOffset, 7+yOffset, color)
+    
+def X(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 2+yOffset, color)
+    SetRange (strip, 5+xOffset, 1+yOffset, 6+xOffset, 2+yOffset, color)
+    SetRange (strip, 5+xOffset, 7+yOffset, 6+xOffset, 8+yOffset, color)
+    SetRange (strip, 1+xOffset, 7+yOffset, 2+xOffset, 8+yOffset, color)
+    SetRange (strip, 3+xOffset, 4+yOffset, 4+xOffset, 5+yOffset, color)
+    SetRange (strip, 2+xOffset, 3+yOffset, 5+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 6+yOffset, 5+xOffset, 6+yOffset, color)
+    
+def Y(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 3+yOffset, color)
+    SetRange (strip, 5+xOffset, 1+yOffset, 6+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 3+yOffset, 5+xOffset, 4+yOffset, color)
+    SetRange (strip, 3+xOffset, 5+yOffset, 4+xOffset, 8+yOffset, color)
+    
+def Z(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 6+xOffset, 2+yOffset, color)
+    SetRange (strip, 1+xOffset, 7+yOffset, 6+xOffset, 8+yOffset, color)
+    SetRange (strip, 2+xOffset, 6+yOffset, 3+xOffset, 6+yOffset, color)
+    SetRange (strip, 3+xOffset, 5+yOffset, 4+xOffset, 5+yOffset, color)
+    SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 4+yOffset, color)
+    SetRange (strip, 5+xOffset, 3+yOffset, 6+xOffset, 3+yOffset, color)
+
     
 #LED Patterns
 #--------------------------------------------------------------------------------------------------------------------
-def DiveFlag6High(strip, xOffset, yOffset):
-    Blank(strip)
-    SetRange(strip, 1+xOffset, 1+yOffset, 8+xOffset, 6+yOffset, Color(255, 0, 0))
-    SetCordinate(strip, 1+xOffset, 1+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 2+xOffset, 1+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 2+xOffset, 2+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 3+xOffset, 2+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 3+xOffset, 3+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 4+xOffset, 3+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 5+xOffset, 3+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 4+xOffset, 4+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 5+xOffset, 4+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 6+xOffset, 4+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 6+xOffset, 5+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 7+xOffset, 5+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 7+xOffset, 6+yOffset, Color(255, 255, 255))
-    SetCordinate(strip, 8+xOffset, 6+yOffset, Color(255, 255, 255))
+def AlfaFlag(strip, xOffset, yOffset):
+    SetRange(strip, 1+xOffset, 1+yOffset, 5+xOffset, 8+yOffset, Color(255, 255, 255))
+    SetRange(strip, 6+xOffset, 1+yOffset, 10+xOffset, 1+yOffset, Color(0, 0, 255))
+    SetRange(strip, 6+xOffset, 2+yOffset, 9+xOffset, 2+yOffset, Color(0, 0, 255))
+    SetRange(strip, 6+xOffset, 3+yOffset, 8+xOffset, 3+yOffset, Color(0, 0, 255))
+    SetRange(strip, 6+xOffset, 4+yOffset, 7+xOffset, 5+yOffset, Color(0, 0, 255))
+    SetRange(strip, 6+xOffset, 6+yOffset, 8+xOffset, 6+yOffset, Color(0, 0, 255))
+    SetRange(strip, 6+xOffset, 7+yOffset, 9+xOffset, 7+yOffset, Color(0, 0, 255))
+    SetRange(strip, 6+xOffset, 8+yOffset, 10+xOffset, 8+yOffset, Color(0, 0, 255))
+
 
 def DiveFlag(strip, xOffset, yOffset):
-    Blank(strip)
     SetRange(strip, 1+xOffset, 1+yOffset, 10+xOffset, 8+yOffset, Color(255, 0, 0))
     SetCordinate(strip, 1+xOffset, 1+yOffset, Color(255, 255, 255))
     SetCordinate(strip, 2+xOffset, 1+yOffset, Color(255, 255, 255))
@@ -253,11 +318,24 @@ def DiveFlag(strip, xOffset, yOffset):
     SetCordinate(strip, 10+xOffset, 8+yOffset, Color(255, 255, 255))
     
 def DFScrollLeft (strip, y, wait_ms):
-    for lcv in range (LED_PanelWidth*LED_PanelCount - 1, (LED_PanelWidth * -1)-3, -1):
+    for lcv in range (LED_PanelWidth*LED_PanelCount - 1, (LED_PanelWidth * -1)-25, -1):
+        Blank(strip)
         DiveFlag(strip, lcv, y)
+        AlfaFlag(strip, lcv+11, y)
+        DiveFlag(strip, lcv+22, y)
         strip.show()
         time.sleep(wait_ms/1000.0)
-    
+
+def MCCreeper (strip, xOffset, yOffset):
+    SetRange(strip, 1+xOffset, 1+yOffset, 8+xOffset, 8+yOffset, Color(0, 220, 25))
+    SetRange(strip, 2+xOffset, 3+yOffset, 3+xOffset, 4+yOffset, Color(0, 0, 0))
+    SetRange(strip, 6+xOffset, 3+yOffset, 7+xOffset, 4+yOffset, Color(0, 0, 0))
+    SetRange(strip, 4+xOffset, 5+yOffset, 5+xOffset, 7+yOffset, Color(0, 0, 0))
+    SetRange(strip, 3+xOffset, 6+yOffset, 3+xOffset, 8+yOffset, Color(0, 0, 0))
+    SetRange(strip, 6+xOffset, 6+yOffset, 6+xOffset, 8+yOffset, Color(0, 0, 0))
+
+
+
 def Open(strip, color, wait_ms):
     Blank(strip)
     O(strip, 0, 0, color)
@@ -274,6 +352,17 @@ def OpenScroll(strip, color, wait_ms):
         P(strip, lcv+7, 0, color)
         E(strip, lcv+14, 0, color)
         N(strip, lcv+21, 0, color)
+        strip.show()
+        time.sleep(wait_ms/1000.0)
+
+def BlargScroll(strip, color, wait_ms):
+    for lcv in range (LED_PanelWidth*LED_PanelCount - 1, (LED_PanelWidth * -1)-28, -1):
+        Blank(strip)
+        B(strip, lcv, 0, color)
+        L(strip, lcv+7, 0, color)
+        A(strip, lcv+14, 0, color)
+        R(strip, lcv+21, 0, color)
+        G(strip, lcv+28, 0, color)
         strip.show()
         time.sleep(wait_ms/1000.0)
 
@@ -309,6 +398,11 @@ def Random(strip):
         strip.show()
         time.sleep(wait_ms/1000.0)
 
+def Demo(strip):
+    Rainbow(strip)
+    DFScrollLeft(strip, 0, 250)
+    Random(strip)
+    BlargScroll(strip, Color(66, 134, 244), 250)
         
 # Main program logic follows:
 if __name__ == '__main__':
@@ -323,13 +417,12 @@ if __name__ == '__main__':
     print ('Press Ctrl-C to quit.')
     try:
         while True:
-            Rainbow(strip)
-            BlankDisplay(strip, 1000)
-            DFScrollLeft(strip, 0, 250)
-            #M(strip, 0, 0, Color(255, 255, 255))
+            #MCCreeper(strip, 0, 0)
             #strip.show()
-            Random(strip)
-            OpenScroll(strip, Color(66, 134, 244), 250)
+            Demo(strip)
+            #OpenScroll(strip, Color(66, 134, 244), 250)
+
+
         
     #Turn off the LED's on Program Exit
     except KeyboardInterrupt:

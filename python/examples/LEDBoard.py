@@ -54,7 +54,7 @@ def SetDisplayColor(strip, color):
 def Blank(strip):
     SetDisplayColor(strip, Color(0, 0, 0))
 
-#Turn off all the Pixes and display it.
+#Turn off all the Pixels and display it.
 def BlankDisplay(strip, wait_ms):
     Blank(strip)
     strip.show()
@@ -98,8 +98,126 @@ def SetRange (strip, sX, sY, eX, eY, color):
     for X in range (sX,eX+1):
         for Y in range (sY, eY+1):
             SetCordinate(strip, X, Y, color)
-   
-#region Letters - Most are 6 Pixels wide and all are 8 Pixels High.  There are a few Exceptions.
+
+#region: Letters - Most charaters are 6 Pixels wide and all are 8 Pixels High.  There are a few Exceptions.
+#First few functions build on the previous one.  SetText just sets the text to the led strip, DisplayText actually shows it,
+#ScrollingText Makes it animated to show longer strings then would fit on the display
+def ScrollingText(strip, Text, yOffset, color, wait_ms=500):
+    xOffset=LED_TotalPanelWidth-1
+    while(DisplayText(strip, Text, xOffset, yOffset, color, wait_ms)>0):
+        xOffset-=1
+def DisplayText(strip, Text, xOffset, yOffset, color, wait_ms=500):
+    Blank(strip)
+    Length = SetText(strip, Text, xOffset, yOffset, color)
+    strip.show()
+    time.sleep(wait_ms/1000.0)
+    return Length
+def SetText(strip, Text, xOffset, yOffset, color):
+    Blank(strip)
+    Position = 0
+    Text = Text.upper()
+    while(len(Text)>0):
+        Letter = Text[0]
+        if (Letter == "A"):
+            Position += A(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "B"):
+            Position += B(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "C"):
+            Position += C(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "D"):
+            Position += D(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "E"):
+            Position += E(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "F"):
+            Position += F(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "G"):
+            Position += G(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "H"):
+            Position += H(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "I"):
+            Position += I(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "J"):
+            Position += J(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "K"):
+            Position += K(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "L"):
+            Position += L(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "M"):
+            Position += M(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "N"):
+            Position += N(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "O"):
+            Position += O(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "P"):
+            Position += P(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "Q"):
+            Position += Q(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "R"):
+            Position += R(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "S"):
+            Position += S(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "T"):
+            Position += T(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "U"):
+            Position += U(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "V"):
+            Position += V(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "W"):
+            Position += W(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "X"):
+            Position += X(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "Y"):
+            Position += Y(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "Z"):
+            Position += Z(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "1"):
+            Position += num1(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "2"):
+            Position += num2(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "3"):
+            Position += num3(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "4"):
+            Position += num4(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "5"):
+            Position += num5(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "6"):
+            Position += num6(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "7"):
+            Position += num7(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "8"):
+            Position += num8(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "9"):
+            Position += num9(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "0"):
+            Position += num0(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == ":"):
+            Position += colon(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "."):
+            Position += period(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "!"):
+            Position += exclamation(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == ","):
+            Position += comma(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == ";"):
+            Position += semicolin(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "\\"):
+            Position += backslash(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "/"):
+            Position += forwardslash(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "*"):
+            Position += star(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "-"):
+            Position += dash(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "+"):
+            Position += plus(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "?"):
+            Position += questionmark(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == "$"):
+            Position += dollarsign(strip, xOffset + Position, yOffset, color) + 1
+        elif (Letter == " "):
+            Position += 3
+        Text = Text[1: :]
+    return Position+xOffset
 def A(strip, xOffset, yOffset, color):
     SetRange (strip, 3+xOffset, 1+yOffset, 4+xOffset, 1+yOffset, color)
     SetRange (strip, 2+xOffset, 2+yOffset, 5+xOffset, 2+yOffset, color)
@@ -155,7 +273,7 @@ def H(strip, xOffset, yOffset, color):
     SetRange (strip, 5+xOffset, 1+yOffset, 6+xOffset, 8+yOffset, color)
     SetRange (strip, 3+xOffset, 4+yOffset, 4+xOffset, 5+yOffset, color)
     return 6
-def I(strip, xOffset, yOffset, color):  #4 Pixel Wide Character
+def I(strip, xOffset, yOffset, color): 
     SetRange (strip, 1+xOffset, 1+yOffset, 4+xOffset, 2+yOffset, color)
     SetRange (strip, 1+xOffset, 7+yOffset, 4+xOffset, 8+yOffset, color)
     SetRange (strip, 2+xOffset, 1+yOffset, 3+xOffset, 8+yOffset, color)
@@ -178,7 +296,7 @@ def L(strip, xOffset, yOffset, color):
     SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 8+yOffset, color)
     SetRange (strip, 1+xOffset, 7+yOffset, 6+xOffset, 8+yOffset, color)
     return 6
-def M(strip, xOffset, yOffset, color):  #8 Pixel Wide Character
+def M(strip, xOffset, yOffset, color):
     SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 8+yOffset, color)
     SetRange (strip, 7+xOffset, 1+yOffset, 8+xOffset, 8+yOffset, color)
     SetRange (strip, 3+xOffset, 2+yOffset, 3+xOffset, 4+yOffset, color)
@@ -245,7 +363,7 @@ def V(strip, xOffset, yOffset, color):
     SetRange (strip, 2+xOffset, 6+yOffset, 5+xOffset, 7+yOffset, color)
     SetRange (strip, 3+xOffset, 8+yOffset, 4+xOffset, 8+yOffset, color)
     return 6
-def W(strip, xOffset, yOffset, color):  #8 Pixel Wide Character
+def W(strip, xOffset, yOffset, color):
     SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 8+yOffset, color)
     SetRange (strip, 7+xOffset, 1+yOffset, 8+xOffset, 8+yOffset, color)
     SetRange (strip, 3+xOffset, 5+yOffset, 3+xOffset, 7+yOffset, color)
@@ -275,7 +393,7 @@ def Z(strip, xOffset, yOffset, color):
     SetRange (strip, 4+xOffset, 4+yOffset, 5+xOffset, 4+yOffset, color)
     SetRange (strip, 5+xOffset, 3+yOffset, 6+xOffset, 3+yOffset, color)
     return 6
-def num1(strip, xOffset, yOffset, color):  #4 Pixel Wide Character
+def num1(strip, xOffset, yOffset, color):
     SetRange (strip, 1+xOffset, 2+yOffset, 1+xOffset, 3+yOffset, color)
     SetRange (strip, 1+xOffset, 7+yOffset, 4+xOffset, 8+yOffset, color)
     SetRange (strip, 2+xOffset, 1+yOffset, 3+xOffset, 8+yOffset, color)
@@ -349,10 +467,69 @@ def num0(strip, xOffset, yOffset, color):
     SetCordinate(strip, 3+xOffset, 5+yOffset, color)
     SetCordinate(strip, 4+xOffset, 4+yOffset, color)
     return 6
-def colon(strip, xOffset, yOffset, color):  #2 Pixel Wide Character
+def colon(strip, xOffset, yOffset, color):
     SetRange (strip, 1+xOffset, 3+yOffset, 2+xOffset, 4+yOffset, color)
     SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
     return 2
+def exclamation(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 5+yOffset, color)
+    SetRange (strip, 1+xOffset, 7+yOffset, 2+xOffset, 8+yOffset, color)
+    return 2
+def period(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 7+yOffset, 2+xOffset, 8+yOffset, color)
+    return 2
+def comma(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 8+yOffset, color)
+    return 2
+def semicolin(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 3+yOffset, 2+xOffset, 4+yOffset, color)
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 7+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 8+yOffset, color)
+    return 2
+def backslash(strip, xOffset, yOffset, color):
+    SetRange (strip, 1+xOffset, 1+yOffset, 2+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 3+yOffset, 3+xOffset, 6+yOffset, color)
+    SetRange (strip, 3+xOffset, 6+yOffset, 4+xOffset, 8+yOffset, color)
+    return 4
+def forwardslash(strip, xOffset, yOffset, color):
+    SetRange (strip, 3+xOffset, 1+yOffset, 4+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 3+yOffset, 3+xOffset, 6+yOffset, color)
+    SetRange (strip, 1+xOffset, 6+yOffset, 2+xOffset, 8+yOffset, color)
+    return 4
+def star(strip, xOffset, yOffset, color):
+    SetRange (strip, 3+xOffset, 3+yOffset, 3+xOffset, 7+yOffset, color)
+    SetRange (strip, 2+xOffset, 5+yOffset, 4+xOffset, 5+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 4+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 6+yOffset, color)
+    SetCordinate(strip, 5+xOffset, 4+yOffset, color)
+    SetCordinate(strip, 5+xOffset, 6+yOffset, color)
+    return 5
+def dash(strip, xOffset, yOffset, color):  
+    SetRange (strip, 1+xOffset, 4+yOffset, 6+xOffset, 5+yOffset, color)
+    return 6
+def plus(strip, xOffset, yOffset, color): 
+    SetRange (strip, 1+xOffset, 4+yOffset, 6+xOffset, 5+yOffset, color)
+    SetRange (strip, 3+xOffset, 2+yOffset, 4+xOffset, 7+yOffset, color)
+    return 6
+def questionmark(strip, xOffset, yOffset, color): 
+    SetRange (strip, 3+xOffset, 1+yOffset, 4+xOffset, 1+yOffset, color)
+    SetRange (strip, 1+xOffset, 2+yOffset, 5+xOffset, 2+yOffset, color)
+    SetRange (strip, 1+xOffset, 3+yOffset, 2+xOffset, 3+yOffset, color)
+    SetRange (strip, 5+xOffset, 3+yOffset, 6+xOffset, 4+yOffset, color)
+    SetRange (strip, 4+xOffset, 5+yOffset, 5+xOffset, 5+yOffset, color)
+    SetRange (strip, 3+xOffset, 6+yOffset, 4+xOffset, 6+yOffset, color)
+    SetRange (strip, 3+xOffset, 8+yOffset, 4+xOffset, 8+yOffset, color)
+    return 6
+def dollarsign(strip, xOffset, yOffset, color):
+    SetRange (strip, 3+xOffset, 1+yOffset, 3+xOffset, 8+yOffset, color)
+    SetRange (strip, 2+xOffset, 2+yOffset, 4+xOffset, 2+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 3+yOffset, color)
+    SetRange (strip, 2+xOffset, 4+yOffset, 4+xOffset, 4+yOffset, color)
+    SetRange (strip, 5+xOffset, 5+yOffset, 5+xOffset, 6+yOffset, color)
+    SetCordinate(strip, 1+xOffset, 6+yOffset, color)
+    SetRange (strip, 2+xOffset, 7+yOffset, 4+xOffset, 7+yOffset, color)
+    return 5
 #endregion
 #region LED Patterns
 def AlfaFlag(strip, xOffset, yOffset):
@@ -386,7 +563,7 @@ def DiveFlag(strip, xOffset, yOffset):
     SetCordinate(strip, 9+xOffset, 8+yOffset, Color(255, 255, 255))
     SetCordinate(strip, 10+xOffset, 8+yOffset, Color(255, 255, 255))
     return 10
-def MCCreeper (strip, xOffset, yOffset):
+def MCCreeper(strip, xOffset, yOffset):
     SetRange(strip, 1+xOffset, 1+yOffset, 8+xOffset, 8+yOffset, Color(0, 220, 25))
     SetRange(strip, 2+xOffset, 3+yOffset, 3+xOffset, 4+yOffset, Color(0, 0, 0))
     SetRange(strip, 6+xOffset, 3+yOffset, 7+xOffset, 4+yOffset, Color(0, 0, 0))
@@ -404,35 +581,14 @@ def DFScrollLeft(strip, y, wait_ms):
         strip.show()
         time.sleep(wait_ms/1000.0)
 
-def Open(strip, color, wait_ms):
-    Blank(strip)
-    Position = O(strip, 0, 0, color)
-    Position +=P(strip, Position, 0, color) +1
-    Position +=E(strip, Position, 0, color) +1
-    N(strip, Position, 0, color)
-    strip.show()
-    time.sleep(wait_ms/1000.0)
+def Open(strip, x, y, color, wait_ms):
+    DisplayText(strip, "Open", x, y, color, wait_ms)
     
 def OpenScroll(strip, y, color, wait_ms):
-    for lcv in range (LED_PanelWidth*LED_NumPnlWide - 1, (LED_PanelWidth * -1)-21, -1):
-        Blank(strip)
-        O(strip, lcv, y, color)
-        P(strip, lcv+7, y, color)
-        E(strip, lcv+14, y, color)
-        N(strip, lcv+21, y, color)
-        strip.show()
-        time.sleep(wait_ms/1000.0)
+    ScrollingText(strip, "Open", y, color, wait_ms)
 
 def BlargScroll(strip, y, color, wait_ms):
-    for lcv in range (LED_PanelWidth*LED_NumPnlWide - 1, (LED_PanelWidth * -1)-28, -1):
-        Blank(strip)
-        B(strip, lcv, y, color)
-        L(strip, lcv+7, y, color)
-        A(strip, lcv+14, y, color)
-        R(strip, lcv+21, y, color)
-        G(strip, lcv+28, y, color)
-        strip.show()
-        time.sleep(wait_ms/1000.0)
+    ScrollingText(strip, "Blarg", y, color, wait_ms)
 
 def Rainbow(strip):
     wait_ms=2
@@ -450,272 +606,15 @@ def Rainbow(strip):
         time.sleep(wait_ms/1000.0)
 
 #Reads time off of pi and displays it...needs at least 30 or so pixels wide to display properly in 24 hour format, 37 for 12 hour.
-def Clock(strip, color, wait_ms = 1500, hrformat = 24, xOffset = 0, yOffset = 0):  
-    Blank(strip)    #Clear existing data on display
+def Clock(strip, color, wait_ms = 1000, hrformat = 24, xOffset = 0, yOffset = 0):
     now = datetime.datetime.now()
-    hr=now.hour     #Set Hour to a variable
-    min = now.minute#Set Minute to a variable
-    
-    #If Hour in is 12 hour format, adjust hour and add a A or P to the end.
-    if hrformat==12:
-        if hr>12:
-            hr -=12
-            P(strip, 31+xOffset, 0+yOffset, color)
-    
-    #hour selector
-    if hr == 1:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num1(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 2:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num2(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 3:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num3(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 4:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num4(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 5:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num5(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 6:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num6(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 7:
-       # num0(strip, 0+xOffset, 0+yOffset, color)
-        num7(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 8:
-        #num0(strip, 0+xOffset, 0+yOffset, color)
-        num8(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 9:
-       # num0(strip, 0+xOffset, 0+yOffset, color)
-        num9(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 10:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num0(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 11:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num1(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 12:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num2(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 13:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num3(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 14:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num4(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 15:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num5(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 16:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num6(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 17:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num7(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 18:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num8(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 19:
-        num1(strip, 2+xOffset, 0+yOffset, color)
-        num9(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 20:
-        num2(strip, 0+xOffset, 0+yOffset, color)
-        num0(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 21:
-        num2(strip, 0+xOffset, 0+yOffset, color)
-        num1(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 22:
-        num2(strip, 0+xOffset, 0+yOffset, color)
-        num2(strip, 7+xOffset, 0+yOffset, color)
-    elif hr == 23:
-        num2(strip, 0+xOffset, 0+yOffset, color)
-        num3(strip, 7+xOffset, 0+yOffset, color)
+    Time = ""
+    if (hrformat == 12):
+        Time = now.strftime("%-I:%M%p")
     else:
-        num0(strip, 0+xOffset, 0+yOffset, color)
-        num0(strip, 7+xOffset, 0+yOffset, color)
-
-    #Minutes
-    if min == 0:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num0(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 1:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num1(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 2:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num2(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 3:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num3(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 4:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num4(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 5:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num5(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 6:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num6(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 7:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num7(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 8:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num8(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 9:
-        num0(strip, 17+xOffset, 0+yOffset, color)
-        num9(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 10:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num0(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 11:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num1(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 12:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num2(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 13:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num3(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 14:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num4(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 15:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num5(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 16:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num6(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 17:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num7(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 18:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num8(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 19:
-        num1(strip, 17+xOffset, 0+yOffset, color)
-        num9(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 20:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num0(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 21:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num1(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 22:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num2(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 23:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num3(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 24:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num4(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 25:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num5(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 26:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num6(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 27:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num7(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 28:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num8(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 29:
-        num2(strip, 17+xOffset, 0+yOffset, color)
-        num9(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 30:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num0(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 31:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num1(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 32:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num2(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 33:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num3(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 34:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num4(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 35:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num5(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 36:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num6(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 39:
-        num3(strip, 17+xOffset, 0+yOffset, color)
-        num9(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 40:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num0(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 41:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num1(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 42:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num2(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 43:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num3(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 44:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num4(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 45:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num5(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 46:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num6(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 47:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num7(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 48:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num8(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 49:
-        num4(strip, 17+xOffset, 0+yOffset, color)
-        num9(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 50:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num0(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 51:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num1(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 52:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num2(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 53:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num3(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 54:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num4(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 55:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num5(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 56:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num6(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 57:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num7(strip, 24+xOffset, 0+yOffset, color)
-    elif min == 58:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num8(strip, 24+xOffset, 0+yOffset, color)
-    else:
-        num5(strip, 17+xOffset, 0+yOffset, color)
-        num9(strip, 24+xOffset, 0+yOffset, color)
-
-    colon(strip, 14+xOffset, 0+yOffset, color)
-    strip.show()
-    time.sleep(wait_ms/1000.0)
-        
+        Time = now.strftime("%-H:%M")
+    ScrollingText(strip, Time, yOffset, color, wait_ms)
+       
 def Random(strip):
     wait_ms=1000
     for loop in range(0,10):
@@ -735,7 +634,7 @@ def Random(strip):
 def Demo(strip):
     #Rainbow(strip)
     DFScrollLeft(strip, 4, 100)
-    Random(strip)
+    #Random(strip)
     #BlargScroll(strip, 4, Color(66, 134, 244), 100)
     
 def TestDisplay(strip):
@@ -757,12 +656,16 @@ if __name__ == '__main__':
     print ('Press Ctrl-C to quit.')
     try:
         while True:
-            #MCCreeper(strip, 12, 4)
-            #Clock(strip, Color(15, 252, 3), 3000, 12, 0,4)
+            MCCreeper(strip, 12, 4)
+            strip.show()
+            time.sleep(2000/1000.0)
+            #Clock(strip, Color(15, 252, 3), 150, 12, 0,4)
+            #ScrollingText(strip, "abcdefghijklmnopqrstuvwxyz 1234567890 :?.!,;-+*/\\", 0, Color(15, 252, 3), 100)
+            ScrollingText(strip, "Only $499.95!", 0, Color(15, 252, 3), 100)
             #DFScrollLeft(strip, 4, 100)
             #TestDisplay(strip)
-            #Demo(strip)
-            OpenScroll(strip, 4, Color(66, 134, 244), 100)
+            Demo(strip)
+            Open(strip, 0, 4, Color(66, 134, 244), 1000)
 
     #Turn off the LED's on Program Exit
     except KeyboardInterrupt:
